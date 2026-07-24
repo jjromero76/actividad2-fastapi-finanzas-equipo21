@@ -8,6 +8,7 @@ from financial_api.schemas import (
 from financial_api.train import MODEL_PATH, METADATA_PATH
 from financial_api.features import PROCESSED_DATA_PATH
 from financial_api.predict import make_prediction
+from statistics import mean
 
 app = FastAPI(
     title="API de Señales Financieras Educativa",
@@ -39,6 +40,24 @@ def get_market_data(symbol: str):
         "latest_date": str(latest["date"]),
         "close": round(float(latest["close"]), 2),
         "return_daily": round(float(latest["return_daily"]), 4)
+    }
+
+
+@app.get("/market-data-average/{symbol}")
+def get_stats(symbol: str):
+    df = pd.read_csv(PROCESSED_DATA_PATH)
+
+    sym_df = df[df["symbol"] == symbol.upper()]
+
+    if sym_df.empty:
+        raise HTTPException(status_code=404, detail="Símbolo no encontrado")
+
+    return {
+        "symbol": symbol.upper(),
+        "average_close": round(sym_df["close"].mean(), 2),
+        "min_close": round(sym_df["close"].min(), 2),
+        "max_close": round(sym_df["close"].max(), 2),
+        "latest_close": round(sym_df.iloc[-1]["close"], 2)
     }
 
 @app.post("/predict", response_model=PredictResponse)
