@@ -1,0 +1,17 @@
+{
+    "model_version": "random_forest_v1",
+    "training_date": "2026-07-23T16:55:49.275376",
+    "symbols_used": [
+        "AAPL",
+        "MSFT",
+        "NVDA"
+    ],
+    "accuracy_metric": 0.4939,
+    "prediction_horizon": "next_day",
+    "features": [
+        "return_daily",
+        "sma_10",
+        "sma_50",
+        "volatility_10d"
+    ]
+}
