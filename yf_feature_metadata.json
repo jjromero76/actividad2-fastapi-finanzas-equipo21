@@ -1,0 +1,37 @@
+{
+    "input_columns": [
+        "date",
+        "symbol",
+        "close"
+    ],
+    "categorical_features": [
+        "symbol"
+    ],
+    "numerical_features": [
+        "close",
+        "return_1d",
+        "return_2d",
+        "return_5d",
+        "return_10d",
+        "ma_5",
+        "ma_10",
+        "ma_20",
+        "volatility_5",
+        "volatility_10",
+        "close_to_ma_5",
+        "close_to_ma_10",
+        "close_to_ma_20",
+        "day_of_week",
+        "month"
+    ],
+    "targets": {
+        "target_trend": "1 if future return is positive else 0",
+        "target_return_pct": "future_close / close - 1",
+        "target_volatility": "standard deviation of next 5 daily returns"
+    },
+    "parameters": {
+        "return_horizon": 1,
+        "volatility_window": 5,
+        "model_type": "RandomForest"
+    }
+}
